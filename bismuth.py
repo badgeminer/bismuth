@@ -1,6 +1,8 @@
 
 import sys,logging
 import io
+import modules
+
 if len(sys.argv) >= 2:
     f = io.open(sys.argv[1], mode="r", encoding="utf-8")
 else:
@@ -12,8 +14,12 @@ if "$dev" in chunks[0]:
     logging.basicConfig(level=logging.DEBUG)
 else:
     logging.basicConfig(level=logging.ERROR)
+
 lines = chunks[1].split("\n")
+
+#define global table
 gT = {}
+
 
 def handle(line):
     global gT
@@ -24,14 +30,25 @@ def handle(line):
     if f == "print":
         print(parseArg(args[0]))
     elif f == "✎":
+        args =ret[1].split(",",1)
         gT[args[0]] = parseArg(args[1])
+    elif f == "⎎":
+        gT[args[0]] = modules.pkgs[args[0]]
+
+
+    
 
 def parseArg(arg):
     if arg[0] == "𝚫":
         return int(arg[1:len(arg)])
     elif arg[0] == "⎌":
-        return gT[arg[1:len(arg)]]
-
+        argc = arg[1:len(arg)].split(".")
+        if len(argc) == 1:
+            return gT[argc[0]]
+        else:
+           return gT[argc[0]][argc[1]] 
+    elif arg[0] == "⎆":
+        return handle(arg[1:len(arg)])
     else:
         return arg
 

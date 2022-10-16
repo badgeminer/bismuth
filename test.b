@@ -4,5 +4,6 @@ $dev
 print| e
 🜲|e
 ⦾|eee
-✎|testVar,𝚫0
+✎|testVar,𝚫5
 print|⎌testVar
+⎎|test
